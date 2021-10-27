@@ -20,6 +20,7 @@ import com.example.androidexmaple2.utils.ViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+// Second Commit
 public class ActivityMain extends AppCompatActivity implements AdapterCountryList.CountryListOnClick, View.OnClickListener {
 
     ActivityMainBinding binding;
