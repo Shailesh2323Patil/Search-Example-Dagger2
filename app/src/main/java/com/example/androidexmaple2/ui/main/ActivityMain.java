@@ -8,27 +8,34 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.androidexmaple2.R;
 import com.example.androidexmaple2.adapter.AdapterCountryList;
 import com.example.androidexmaple2.data.model.CountryModel;
 import com.example.androidexmaple2.data.repository.RepoCountries;
 import com.example.androidexmaple2.databinding.ActivityMainBinding;
+
+import com.example.androidexmaple2.di.adapter.AdapterComponent;
+
+import com.example.androidexmaple2.di.adapter.DaggerAdapterComponent;
 import com.example.androidexmaple2.utils.Resource;
 import com.example.androidexmaple2.utils.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// Second Commit
 public class ActivityMain extends AppCompatActivity implements AdapterCountryList.CountryListOnClick, View.OnClickListener {
 
     ActivityMainBinding binding;
 
     ViewModelMain viewModelMain;
 
-    private AdapterCountryList adapterCountryList;
-    private ArrayList<CountryModel> arrayListCountryModel;
+    AdapterCountryList adapterCountryList;
+
+    LinearLayoutManager linearLayoutManager;
+
+    ArrayList<CountryModel> arrayListCountryModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +53,20 @@ public class ActivityMain extends AppCompatActivity implements AdapterCountryLis
         viewModelMain = new ViewModelProvider(this, new ViewModelFactory(getApplication(), repoCountries)).get(ViewModelMain.class);
 
         arrayListCountryModel = new ArrayList<CountryModel>();
-        adapterCountryList = new AdapterCountryList(arrayListCountryModel, this);
-        binding.recyleCountryName.setLayoutManager(new LinearLayoutManager(this));
+
+        /* Dagger Implementation */
+        AdapterComponent adapterComponent = DaggerAdapterComponent.builder()
+                .setCountryModel(arrayListCountryModel)
+                .setListOnClick(this)
+                .setContext(this)
+                .build();
+        /* Dagger Implementation */
+
+        adapterCountryList = adapterComponent.getAdapterList();
+
+        linearLayoutManager = adapterComponent.getLinearLayoutManager();
+
+        binding.recyleCountryName.setLayoutManager(linearLayoutManager);
         binding.recyleCountryName.setAdapter(adapterCountryList);
 
         binding.btnSearch.setOnClickListener(this);
@@ -92,11 +111,6 @@ public class ActivityMain extends AppCompatActivity implements AdapterCountryLis
     }
 
     @Override
-    public void onItemClickListener() {
-
-    }
-
-    @Override
     public void onClick(View view) {
         if (view == binding.btnSearch) {
             String countryName = binding.editSearch.getText().toString();
@@ -136,5 +150,10 @@ public class ActivityMain extends AppCompatActivity implements AdapterCountryLis
                 }
             });
         }
+    }
+
+    @Override
+    public void onItemClickListener(String data) {
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
     }
 }

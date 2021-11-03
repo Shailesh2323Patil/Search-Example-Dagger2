@@ -1,7 +1,7 @@
 package com.example.androidexmaple2.network_config;
 
 import com.example.androidexmaple2.data.model.CountryModel;
-import com.example.androidexmaple2.di.DaggerMyComponent;
+import com.example.androidexmaple2.di.api.DaggerApiComponent;
 
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class ApiClient {
     public ApiServices apiServices;
 
     private ApiClient() {
-        DaggerMyComponent.create().inject(this);
+        DaggerApiComponent.create().inject(this);
     }
 
     public static ApiClient getInstance() {

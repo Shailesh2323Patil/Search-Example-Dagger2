@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.androidexmaple2.data.database.CountryDao;
 import com.example.androidexmaple2.data.database.Database;
 import com.example.androidexmaple2.data.model.CountryModel;
-import com.example.androidexmaple2.di.DaggerMyComponent;
-import com.example.androidexmaple2.di.MyComponent;
+import com.example.androidexmaple2.di.api.ApiComponent;
+import com.example.androidexmaple2.di.api.DaggerApiComponent;
 import com.example.androidexmaple2.network_config.ApiClient;
 import com.example.androidexmaple2.utils.Resource;
 import java.util.List;
@@ -35,13 +35,13 @@ public class RepoCountries {
     private MutableLiveData<Resource<List<CountryModel>>> _mutableLiveDataCountry = new MutableLiveData<Resource<List<CountryModel>>>();
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    MyComponent myComponent;
+    ApiComponent apiComponent;
 
     private CountryDao countryDao;
 
     public RepoCountries(Application application) {
-        myComponent = DaggerMyComponent.create();
-        myComponent.inject(RepoCountries.this);
+        apiComponent = DaggerApiComponent.create();
+        apiComponent.inject(RepoCountries.this);
 
         Database database = Database.getInstance(application);
         countryDao = database.countryDao();

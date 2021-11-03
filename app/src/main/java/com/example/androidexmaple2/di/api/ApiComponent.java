@@ -1,4 +1,4 @@
-package com.example.androidexmaple2.di;
+package com.example.androidexmaple2.di.api;
 
 
 import com.example.androidexmaple2.data.repository.RepoCountries;
@@ -10,7 +10,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {ApiModule.class})
-public interface MyComponent {
+public interface ApiComponent {
 
     void inject(ApiClient apiClient);
 

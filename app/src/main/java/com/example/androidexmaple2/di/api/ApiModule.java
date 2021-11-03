@@ -1,4 +1,4 @@
-package com.example.androidexmaple2.di;
+package com.example.androidexmaple2.di.api;
 
 import com.example.androidexmaple2.network_config.ApiClient;
 import com.example.androidexmaple2.network_config.ApiServices;

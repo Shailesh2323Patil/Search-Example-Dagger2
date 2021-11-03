@@ -68,17 +68,17 @@ public class AdapterCountryList extends RecyclerView.Adapter<AdapterCountryList.
                     .load(countryModel.getFlag())
                     .into(binding.img);
 
-            binding.img.setOnClickListener(new View.OnClickListener() {
+            binding.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listOnClick.onItemClickListener();
+                    listOnClick.onItemClickListener(countryModel.getCountryName());
                 }
             });
         }
     }
 
     public interface CountryListOnClick {
-        void onItemClickListener();
+        void onItemClickListener(String data);
     }
 
 }
